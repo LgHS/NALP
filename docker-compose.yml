@@ -1,0 +1,15 @@
+services:
+  nuki-proxy:
+    build: .
+    container_name: nuki-proxy
+    restart: unless-stopped
+    env_file:
+      - .env
+    ports:
+      - "8000:8000"
+    volumes:
+      # Monte le fichier de policies en lecture seule pour pouvoir
+      # ajouter/revoquer des cles sans rebuild de l'image.
+      - ./policies.yaml:/app/policies.yaml:ro
+    # Optionnel: restreindre le proxy a ne parler qu'au Bridge + DNS.
+    # A affiner selon ton setup reseau (VLAN dedie recommande pour le Bridge).

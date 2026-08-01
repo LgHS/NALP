@@ -1,0 +1,12 @@
+# Secrets - ne jamais committer
+.env
+policies.yaml
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+venv/
+
+# OS
+.DS_Store

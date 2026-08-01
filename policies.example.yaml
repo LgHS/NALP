@@ -1,0 +1,15 @@
+# Politique d'acces du proxy.
+# Chaque entree = une cle API distribuee. On ne stocke JAMAIS la cle en clair,
+# seulement son hash (voir generate_key.py pour en creer une).
+#
+# actions possibles: battery, state, lock, unlock
+# lock_id = le "nukiId" tel que renvoye par /list sur le Bridge
+
+api_keys:
+  # Exemple - a remplacer par tes vraies cles generees via generate_key.py
+  - name: "exemple - a supprimer"
+    token_hash: "0000000000000000000000000000000000000000000000000000000000000"
+    expires_at: null   # ou "2026-12-31T00:00:00Z"
+    grants:
+      - lock_id: "12345678"
+        actions: ["battery"]
