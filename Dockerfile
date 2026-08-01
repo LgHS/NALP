@@ -8,6 +8,9 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 COPY app ./app
+# Fallback embarque dans l'image (aucun grant reel) pour que le build marche
+# meme sans policies.yaml local. docker-compose monte le vrai fichier par-dessus.
+COPY policies.example.yaml ./policies.yaml
 
 USER appuser
 
