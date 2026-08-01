@@ -91,3 +91,10 @@ python3 tests/fake_bridge.py --port 9090 --token testtoken123
   utilise un certificat auto-signe.
 - Le Bridge lui-meme n'est pas en TLS: isoler idealement le Bridge sur un
   VLAN/segment reseau dont seul le proxy peut s'approcher.
+- Cache par callback: au lieu d'interroger le Bridge a chaque requete, le
+  proxy pourrait s'enregistrer via `/callback/add` et garder un cache memoire
+  mis a jour par les push du Bridge. Ca reduirait les erreurs `503` en cas de
+  requetes concurrentes et eviterait de sur-solliciter le Bridge. A traiter
+  avec precaution car le mecanisme de callback de Nuki n'a aucune auth
+  integree (il faudrait verifier l'IP source + un segment d'URL imprevisible
+  sur l'endpoint qui recoit les callbacks). Pas encore implemente.
