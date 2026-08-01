@@ -95,6 +95,17 @@ class NukiBridgeClient:
                 }
         raise NukiBridgeError(f"Lock {nuki_id} introuvable sur le Bridge")
 
+    def get_doorsensor(self, nuki_id: str) -> dict[str, Any]:
+        """Pas d'endpoint dedie: on lit lastKnownState depuis /list."""
+        for lock in self.list_locks():
+            if str(lock.get("nukiId")) == str(nuki_id):
+                state = lock.get("lastKnownState", {}) or {}
+                return {
+                    "doorsensorState": state.get("doorsensorState"),
+                    "doorsensorStateName": state.get("doorsensorStateName"),
+                }
+        raise NukiBridgeError(f"Lock {nuki_id} introuvable sur le Bridge")
+
     def lock_action(self, nuki_id: str, action: str, device_type: int = 0) -> dict[str, Any]:
         """GET /lockAction - envoie une action (lock/unlock/unlatch)."""
         if action not in ACTION_MAP:

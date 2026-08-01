@@ -84,6 +84,9 @@ def list_locks(entry: ApiKeyEntry = Depends(get_current_key)):
         if "battery" in grant.actions:
             item["batteryCritical"] = state.get("batteryCritical")
             item["batteryChargeState"] = state.get("batteryChargeState")
+        if "doorsensor" in grant.actions:
+            item["doorsensorState"] = state.get("doorsensorState")
+            item["doorsensorStateName"] = state.get("doorsensorStateName")
         result.append(item)
     return {"locks": result}
 
@@ -106,6 +109,16 @@ def get_battery(lock_id: str, entry: ApiKeyEntry = Depends(get_current_key)):
     except NukiBridgeError as e:
         raise HTTPException(status_code=502, detail=str(e)) from e
     return battery
+
+
+@app.get("/v1/locks/{lock_id}/doorsensor")
+def get_doorsensor(lock_id: str, entry: ApiKeyEntry = Depends(get_current_key)):
+    require_grant(entry, lock_id, "doorsensor")
+    try:
+        doorsensor = bridge.get_doorsensor(lock_id)
+    except NukiBridgeError as e:
+        raise HTTPException(status_code=502, detail=str(e)) from e
+    return doorsensor
 
 
 @app.post("/v1/locks/{lock_id}/action")

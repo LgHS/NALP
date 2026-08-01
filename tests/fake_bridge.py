@@ -19,9 +19,11 @@ STATE = {
     "token": "testtoken123",
     "locks": {
         "111": {"nukiId": "111", "name": "Porte principale",
-                "lastKnownState": {"stateName": "locked", "batteryCritical": False, "batteryChargeState": 87}},
+                "lastKnownState": {"stateName": "locked", "batteryCritical": False, "batteryChargeState": 87,
+                                    "doorsensorState": 2, "doorsensorStateName": "door closed"}},
         "222": {"nukiId": "222", "name": "Porte garage",
-                "lastKnownState": {"stateName": "unlocked", "batteryCritical": True, "batteryChargeState": 12}},
+                "lastKnownState": {"stateName": "unlocked", "batteryCritical": True, "batteryChargeState": 12,
+                                    "doorsensorState": 3, "doorsensorStateName": "door opened"}},
     },
 }
 

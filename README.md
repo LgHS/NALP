@@ -9,7 +9,7 @@ instead of the single Bridge token that grants everything.
 - The proxy is the only thing that knows the real Bridge token, and talks to
   it using **hashToken** (never the plain token) to limit secret exposure.
 - Each client gets its own API key, scoped by lock and by action
-  (`battery`, `state`, `lock`, `unlock`, `unlatch`), with optional expiry.
+  (`battery`, `state`, `doorsensor`, `lock`, `unlock`, `unlatch`), with optional expiry.
 - No key is ever stored in plaintext: only its hash (salted with a pepper)
   lives in `policies.yaml`.
 
@@ -53,12 +53,15 @@ All routes require `Authorization: Bearer <key>`.
 - `GET /v1/locks` - locks visible to this key, fields filtered by granted actions
 - `GET /v1/locks/{id}/state` - requires the `state` grant
 - `GET /v1/locks/{id}/battery` - requires the `battery` grant
+- `GET /v1/locks/{id}/doorsensor` - requires the `doorsensor` grant
 - `POST /v1/locks/{id}/action` `{"action": "lock"|"unlock"|"unlatch"}` -
   requires the matching grant
 - `GET /healthz` - no auth, for monitoring
 
 Rejections: `401` if the key is missing/invalid/expired, `403` if the
 action/lock isn't in the grants, `502` if the Bridge doesn't respond.
+
+See [ACTIONS.md](./ACTIONS.md) for the full list of grantable actions.
 
 ## Revoking a key
 

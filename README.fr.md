@@ -9,7 +9,7 @@ granulaires au lieu du token Bridge unique qui donne tout.
 - Le proxy est le seul a connaitre le vrai token du Bridge, et lui parle en
   **hashToken** (jamais en token clair) pour limiter l'exposition du secret.
 - Chaque client recoit sa propre cle API, scopee par serrure et par action
-  (`battery`, `state`, `lock`, `unlock`, `unlatch`), avec expiration optionnelle.
+  (`battery`, `state`, `doorsensor`, `lock`, `unlock`, `unlatch`), avec expiration optionnelle.
 - Aucune cle n'est stockee en clair: seul son hash (sale par un pepper) vit
   dans `policies.yaml`.
 
@@ -55,9 +55,12 @@ Toutes les routes necessitent `Authorization: Bearer <cle>`.
   selon les actions accordees
 - `GET /v1/locks/{id}/state` - necessite le grant `state`
 - `GET /v1/locks/{id}/battery` - necessite le grant `battery`
+- `GET /v1/locks/{id}/doorsensor` - necessite le grant `doorsensor`
 - `POST /v1/locks/{id}/action` `{"action": "lock"|"unlock"|"unlatch"}` -
   necessite le grant correspondant
 - `GET /healthz` - pas d'auth, pour le monitoring
+
+Voir [ACTIONS.fr.md](./ACTIONS.fr.md) pour la liste complete des actions disponibles.
 
 Refus: `401` si cle absente/invalide/expiree, `403` si l'action/serrure n'est
 pas dans les grants, `502` si le Bridge ne repond pas.
